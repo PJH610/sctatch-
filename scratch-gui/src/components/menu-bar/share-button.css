@@ -1,0 +1,13 @@
+@import '../../css/colors.css';
+.share-button {
+    background: $data-primary;
+    /* 隐藏了这个组件 */
+    /* display: none; */
+    color: #000;
+    /* opacity: 1; */
+}
+
+.share-button-is-shared {
+    background: $ui-black-transparent;
+    /* cursor: default; */
+}

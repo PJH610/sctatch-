@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            var SerialPort = require('serialport')
+            SerialPort.list(function(error, ports) {
+                ports.forEach(function(port) {
+                    console.log(port.comName)
+                    console.log(port.pnpId)
+                    console.log(port.manufacturer)
+                })
+            })
+        </script>
+    </body>
+</html>
