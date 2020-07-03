@@ -1,40 +1,40 @@
-import classNames from 'classnames'
-import { connect } from 'react-redux'
+import classNames from "classnames";
+import { connect } from "react-redux";
 import {
     defineMessages,
     FormattedMessage,
     injectIntl,
-    intlShape
-} from 'react-intl'
-import PropTypes from 'prop-types'
-import bindAll from 'lodash.bindall'
-import bowser from 'bowser'
-import React from 'react'
+    intlShape,
+} from "react-intl";
+import PropTypes from "prop-types";
+import bindAll from "lodash.bindall";
+import bowser from "bowser";
+import React from "react";
 
-import VM from 'scratch-vm'
+import VM from "scratch-vm";
 
-import Box from '../box/box.jsx'
-import Button from '../button/button.jsx'
-import CommunityButton from './community-button.jsx'
-import ShareButton from './share-button.jsx'
-import { ComingSoonTooltip } from '../coming-soon/coming-soon.jsx'
-import Divider from '../divider/divider.jsx'
-import LanguageSelector from '../../containers/language-selector.jsx'
-import SaveStatus from './save-status.jsx'
-import SBFileUploader from '../../containers/sb-file-uploader.jsx'
-import ProjectWatcher from '../../containers/project-watcher.jsx'
-import MenuBarMenu from './menu-bar-menu.jsx'
-import { MenuItem, MenuSection } from '../menu/menu.jsx'
-import ProjectTitleInput from './project-title-input.jsx'
-import AuthorInfo from './author-info.jsx'
-import AccountNav from '../../containers/account-nav.jsx'
-import LoginDropdown from './login-dropdown.jsx'
-import SB3Downloader from '../../containers/sb3-downloader.jsx'
-import DeletionRestorer from '../../containers/deletion-restorer.jsx'
-import TurboMode from '../../containers/turbo-mode.jsx'
+import Box from "../box/box.jsx";
+import Button from "../button/button.jsx";
+import CommunityButton from "./community-button.jsx";
+import ShareButton from "./share-button.jsx";
+import { ComingSoonTooltip } from "../coming-soon/coming-soon.jsx";
+import Divider from "../divider/divider.jsx";
+import LanguageSelector from "../../containers/language-selector.jsx";
+import SaveStatus from "./save-status.jsx";
+import SBFileUploader from "../../containers/sb-file-uploader.jsx";
+import ProjectWatcher from "../../containers/project-watcher.jsx";
+import MenuBarMenu from "./menu-bar-menu.jsx";
+import { MenuItem, MenuSection } from "../menu/menu.jsx";
+import ProjectTitleInput from "./project-title-input.jsx";
+import AuthorInfo from "./author-info.jsx";
+import AccountNav from "../../containers/account-nav.jsx";
+import LoginDropdown from "./login-dropdown.jsx";
+import SB3Downloader from "../../containers/sb3-downloader.jsx";
+import DeletionRestorer from "../../containers/deletion-restorer.jsx";
+import TurboMode from "../../containers/turbo-mode.jsx";
 
-import { openTipsLibrary } from '../../reducers/modals'
-import { setPlayer } from '../../reducers/mode'
+import { openTipsLibrary } from "../../reducers/modals";
+import { setPlayer } from "../../reducers/mode";
 import {
     autoUpdateProject,
     getIsUpdating,
@@ -42,8 +42,8 @@ import {
     manualUpdateProject,
     requestNewProject,
     remixProject,
-    saveProjectAsCopy
-} from '../../reducers/project-state'
+    saveProjectAsCopy,
+} from "../../reducers/project-state";
 import {
     openAccountMenu,
     closeAccountMenu,
@@ -59,46 +59,46 @@ import {
     languageMenuOpen,
     openLoginMenu,
     closeLoginMenu,
-    loginMenuOpen
-} from '../../reducers/menus'
+    loginMenuOpen,
+} from "../../reducers/menus";
 
-import collectMetadata from '../../lib/collect-metadata'
+import collectMetadata from "../../lib/collect-metadata";
 
-import styles from './menu-bar.css'
+import styles from "./menu-bar.css";
 
-import helpIcon from '../../lib/assets/icon--tutorials.svg'
-import mystuffIcon from './icon--mystuff.png'
-import profileIcon from './icon--profile.png'
-import remixIcon from './icon--remix.svg'
-import dropdownCaret from './dropdown-caret.svg'
-import languageIcon from '../language-selector/language-icon.svg'
+import helpIcon from "../../lib/assets/icon--tutorials.svg";
+import mystuffIcon from "./icon--mystuff.png";
+import profileIcon from "./icon--profile.png";
+import remixIcon from "./icon--remix.svg";
+import dropdownCaret from "./dropdown-caret.svg";
+import languageIcon from "../language-selector/language-icon.svg";
 
-import scratchLogo from './scratch-logo.svg'
+import scratchLogo from "./scratch-logo.svg";
 
-import sharedMessages from '../../lib/shared-messages'
+import sharedMessages from "../../lib/shared-messages";
 
 const ariaMessages = defineMessages({
     language: {
-        id: 'gui.menuBar.LanguageSelector',
-        defaultMessage: 'language selector',
-        description: 'accessibility text for the language selection menu'
+        id: "gui.menuBar.LanguageSelector",
+        defaultMessage: "language selector",
+        description: "accessibility text for the language selection menu",
     },
     tutorials: {
-        id: 'gui.menuBar.tutorialsLibrary',
-        defaultMessage: 'Tutorials',
-        description: 'accessibility text for the tutorials button'
-    }
-})
+        id: "gui.menuBar.tutorialsLibrary",
+        defaultMessage: "Tutorials",
+        description: "accessibility text for the tutorials button",
+    },
+});
 
 const MenuBarItemTooltip = ({
     children,
     className,
     enable,
     id,
-    place = 'bottom'
+    place = "bottom",
 }) => {
     if (enable) {
-        return <React.Fragment>{children}</React.Fragment>
+        return <React.Fragment>{children}</React.Fragment>;
     }
     return (
         <ComingSoonTooltip
@@ -109,62 +109,66 @@ const MenuBarItemTooltip = ({
         >
             {children}
         </ComingSoonTooltip>
-    )
-}
+    );
+};
 
 MenuBarItemTooltip.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     enable: PropTypes.bool,
     id: PropTypes.string,
-    place: PropTypes.oneOf(['top', 'bottom', 'left', 'right'])
-}
+    place: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+};
 
 const MenuItemTooltip = ({ id, isRtl, children, className }) => (
     <ComingSoonTooltip
         className={classNames(styles.comingSoon, className)}
         isRtl={isRtl}
-        place={isRtl ? 'left' : 'right'}
+        place={isRtl ? "left" : "right"}
         tooltipClassName={styles.comingSoonTooltip}
         tooltipId={id}
     >
         {children}
     </ComingSoonTooltip>
-)
+);
 
 MenuItemTooltip.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     id: PropTypes.string,
-    isRtl: PropTypes.bool
-}
+    isRtl: PropTypes.bool,
+};
 
 class MenuBar extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         bindAll(this, [
-            'handleClickNew',
-            'handleClickRemix',
-            'handleClickSave',
-            'handleClickSaveAsCopy',
-            'handleClickSeeCommunity',
-            'handleClickShare',
-            'handleKeyPress',
-            'handleLanguageMouseUp',
-            'handleRestoreOption',
-            'handleSaveToComputer',
-            'restoreOptionMessage',
-            'handleClickLink'
-        ])
+            "handleClickNew",
+            "handleClickRemix",
+            "handleClickSave",
+            "handleClickSaveAsCopy",
+            "handleClickSeeCommunity",
+            "handleClickShare",
+            "handleKeyPress",
+            "handleLanguageMouseUp",
+            "handleRestoreOption",
+            "handleSaveToComputer",
+            "restoreOptionMessage",
+            "handleClickLink",
+            "handleClickTest",
+        ]);
+        this.state = {
+            link_state: false,
+        };
     }
     componentDidMount() {
-        document.addEventListener('keydown', this.handleKeyPress)
+        document.addEventListener("keydown", this.handleKeyPress);
     }
     componentWillUnmount() {
-        document.removeEventListener('keydown', this.handleKeyPress)
+        document.removeEventListener("keydown", this.handleKeyPress);
     }
     handleClickNew() {
-        let readyToReplaceProject = true
+        let readyToReplaceProject = true;
         // if the project is dirty, and user owns the project, we will autosave.
         // but if they are not logged in and can't save, user should consider
         // downloading or logging in first.
@@ -176,108 +180,110 @@ class MenuBar extends React.Component {
                 this.props.intl.formatMessage(
                     sharedMessages.replaceProjectWarning
                 )
-            )
+            );
         }
-        this.props.onRequestCloseFile()
+        this.props.onRequestCloseFile();
         if (readyToReplaceProject) {
-            this.props.onClickNew(this.props.canSave && this.props.canCreateNew)
+            this.props.onClickNew(
+                this.props.canSave && this.props.canCreateNew
+            );
         }
-        this.props.onRequestCloseFile()
+        this.props.onRequestCloseFile();
     }
     handleClickRemix() {
-        this.props.onClickRemix()
-        this.props.onRequestCloseFile()
+        this.props.onClickRemix();
+        this.props.onRequestCloseFile();
     }
     handleClickSave() {
-        this.props.onClickSave()
-        this.props.onRequestCloseFile()
+        this.props.onClickSave();
+        this.props.onRequestCloseFile();
     }
     handleClickSaveAsCopy() {
-        this.props.onClickSaveAsCopy()
-        this.props.onRequestCloseFile()
+        this.props.onClickSaveAsCopy();
+        this.props.onRequestCloseFile();
     }
     handleClickSeeCommunity(waitForUpdate) {
         if (this.props.canSave) {
             // save before transitioning to project page
-            this.props.autoUpdateProject()
-            waitForUpdate(true) // queue the transition to project page
+            this.props.autoUpdateProject();
+            waitForUpdate(true); // queue the transition to project page
         } else {
-            waitForUpdate(false) // immediately transition to project page
+            waitForUpdate(false); // immediately transition to project page
         }
     }
     handleClickShare(waitForUpdate) {
         if (!this.props.isShared) {
             if (this.props.canShare) {
                 // save before transitioning to project page
-                this.props.onShare()
+                this.props.onShare();
             }
             if (this.props.canSave) {
                 // save before transitioning to project page
-                this.props.autoUpdateProject()
-                waitForUpdate(true) // queue the transition to project page
+                this.props.autoUpdateProject();
+                waitForUpdate(true); // queue the transition to project page
             } else {
-                waitForUpdate(false) // immediately transition to project page
+                waitForUpdate(false); // immediately transition to project page
             }
         }
     }
     handleRestoreOption(restoreFun) {
         return () => {
-            restoreFun()
-            this.props.onRequestCloseEdit()
-        }
+            restoreFun();
+            this.props.onRequestCloseEdit();
+        };
     }
     handleKeyPress(event) {
-        const modifier = bowser.mac ? event.metaKey : event.ctrlKey
-        if (modifier && event.key === 's') {
-            this.props.onClickSave()
-            event.preventDefault()
+        const modifier = bowser.mac ? event.metaKey : event.ctrlKey;
+        if (modifier && event.key === "s") {
+            this.props.onClickSave();
+            event.preventDefault();
         }
     }
     handleSaveToComputer(downloadProjectCallback) {
         return () => {
-            this.props.onRequestCloseFile()
-            downloadProjectCallback()
+            this.props.onRequestCloseFile();
+            downloadProjectCallback();
             if (this.props.onProjectTelemetryEvent) {
                 const metadata = collectMetadata(
                     this.props.vm,
                     this.props.projectTitle,
                     this.props.locale
-                )
-                this.props.onProjectTelemetryEvent('projectDidSave', metadata)
+                );
+                this.props.onProjectTelemetryEvent("projectDidSave", metadata);
             }
-        }
+        };
     }
     handleLanguageMouseUp(e) {
         if (!this.props.languageMenuOpen) {
-            this.props.onClickLanguage(e)
+            this.props.onClickLanguage(e);
         }
     }
     restoreOptionMessage(deletedItem) {
         switch (deletedItem) {
-            case 'Sprite':
+            case "Sprite":
                 return (
                     <FormattedMessage
                         defaultMessage="Restore Sprite"
                         description="Menu bar item for restoring the last deleted sprite."
                         id="gui.menuBar.restoreSprite"
                     />
-                )
-            case 'Sound':
+                );
+            case "Sound":
                 return (
                     <FormattedMessage
                         defaultMessage="Restore Sound"
                         description="Menu bar item for restoring the last deleted sound."
                         id="gui.menuBar.restoreSound"
                     />
-                )
-            case 'Costume':
+                );
+            case "Costume":
                 return (
                     <FormattedMessage
                         defaultMessage="Restore Costume"
                         description="Menu bar item for restoring the last deleted costume."
                         id="gui.menuBar.restoreCostume"
                     />
-                )
+                );
             default: {
                 return (
                     <FormattedMessage
@@ -285,63 +291,119 @@ class MenuBar extends React.Component {
                         description="Menu bar item for restoring the last deleted item in its disabled state." /* eslint-disable-line max-len */
                         id="gui.menuBar.restore"
                     />
-                )
+                );
             }
         }
     }
     // 打开link方法
     handleClickLink() {
-        console.log('点了点了')
+        console.log("点了点了");
+
         //var a = window.Blockly.getMainWorkspace()
-        //console.log(a)
-        var path = window.require('path')
-        var execPath = path.dirname(process.execPath) + '/link_le/link_le.exe'
+        // console.log(typeof window.require != "undefined");
+        if (typeof window.require == "undefined") {
+            alert("当前为浏览器环境,请手动打开link_le连接主板!!!");
+            return;
+        }
+        var path = window.require("path");
+        // 相对路径
+        var execPath = path.dirname(process.execPath) + "/link_le/link_le.exe";
 
-        //var path = __dirname + 'link_le/link_le.exe'
-
-        const exe = window.require('child_process').exec //开一个子进程
+        const exe = window.require("child_process").exec; //开一个子进程
         //'C:/arduino/link_le/link_le.exe'
-        exe(execPath, function(error, stdout, stderr) {
-            console.log('stdout: ' + stdout)
-            console.log('stderr: ' + stderr)
+        exe(execPath, function (error, stdout, stderr) {
+            console.log("stdout: " + stdout);
+            console.log("stderr: " + stderr);
             if (error !== null) {
-                console.log('exec error: ' + error) //没有错误产生，所以本行无输出
+                console.log("exec error: " + error); //没有错误产生，所以本行无输出
             }
-        })
+        });
 
         // var electron = window.require('electron')
         // var ipc = electron.ipcRenderer
         // ipc.send('getMsg', 'open')
     }
+
+    // 连接测试
+    handleClickTest() {
+        setTimeout(() => {
+            let ws = new WebSocket("ws://localhost:3000");
+            ws.onopen = function () {
+                let buf = "0fffabcdef0d0a";
+                let buf1 = new Buffer(buf, "hex");
+                ws.send(buf1);
+            };
+            ws.onclose = function (event) {
+                console.log("连接关闭");
+            };
+            ws.onerror = (event) => {
+                ws.close();
+                console.error("WebSocket error observed:", event);
+                //console.log("连接可能中断 保存好项目 从新连接串口!!");
+                this.setState({ link_state: false });
+                alert("还没连接串口打开!!!");
+            };
+            // Promise 解决异步取值的问题
+            function getServerMsg() {
+                return new Promise((resolve, reject) => {
+                    ws.onmessage = function (mes) {
+                        let message = mes.data;
+                        //console.log(message);
+                        resolve(message);
+                        //console.log(message);
+                    };
+                });
+            }
+            getServerMsg().then((ret) => {
+                console.log(ret);
+                if (ret === "1") {
+                    this.setState({ link_state: true });
+                    alert("连接成功!!");
+                } else {
+                    this.setState({ link_state: false });
+                    alert("串口没有连接或者没有固件,检查串口以及固件是否正常!");
+                }
+            });
+        }, 1000);
+    }
     render() {
+        // 增加的style
+        const linkStyle = {
+            color: this.state.link_state ? "#fff" : "rgb(248, 83, 83)",
+        };
+
+        const bbStyle = {
+            color: "#fff",
+        };
+
         const saveNowMessage = (
             <FormattedMessage
                 defaultMessage="Save now"
                 description="Menu bar item for saving now"
                 id="gui.menuBar.saveNow"
             />
-        )
+        );
         const createCopyMessage = (
             <FormattedMessage
                 defaultMessage="Save as a copy"
                 description="Menu bar item for saving as a copy"
                 id="gui.menuBar.saveAsCopy"
             />
-        )
+        );
         const remixMessage = (
             <FormattedMessage
                 defaultMessage="Remix"
                 description="Menu bar item for remixing"
                 id="gui.menuBar.remix"
             />
-        )
+        );
         const newProjectMessage = (
             <FormattedMessage
                 defaultMessage="New"
                 description="Menu bar item for creating a new project"
                 id="gui.menuBar.new"
             />
-        )
+        );
         const remixButton = (
             <Button
                 className={classNames(styles.menuBarButton, styles.remixButton)}
@@ -351,7 +413,7 @@ class MenuBar extends React.Component {
             >
                 {remixMessage}
             </Button>
-        )
+        );
         return (
             <Box className={classNames(this.props.className, styles.menuBar)}>
                 <div className={styles.mainMenu}>
@@ -362,7 +424,7 @@ class MenuBar extends React.Component {
                                 className={classNames(styles.scratchLogo, {
                                     [styles.clickable]:
                                         typeof this.props.onClickLogo !==
-                                        'undefined'
+                                        "undefined",
                                 })}
                                 draggable={false}
                                 src={scratchLogo}
@@ -397,7 +459,7 @@ class MenuBar extends React.Component {
                                 styles.menuBarItem,
                                 styles.hoverable,
                                 {
-                                    [styles.active]: this.props.fileMenuOpen
+                                    [styles.active]: this.props.fileMenuOpen,
                                 }
                             )}
                             onMouseUp={this.props.onClickFile}
@@ -410,7 +472,7 @@ class MenuBar extends React.Component {
                             <MenuBarMenu
                                 className={classNames(styles.menuBarMenu)}
                                 open={this.props.fileMenuOpen}
-                                place={this.props.isRtl ? 'left' : 'right'}
+                                place={this.props.isRtl ? "left" : "right"}
                                 onRequestClose={this.props.onRequestCloseFile}
                             >
                                 <MenuSection>
@@ -474,7 +536,7 @@ class MenuBar extends React.Component {
                                                 <FormattedMessage
                                                     defaultMessage="Load from your computer"
                                                     description={
-                                                        'Menu bar item for uploading a project from your computer'
+                                                        "Menu bar item for uploading a project from your computer"
                                                     }
                                                     id="gui.menuBar.uploadFromComputer"
                                                 />
@@ -514,7 +576,7 @@ class MenuBar extends React.Component {
                                 styles.menuBarItem,
                                 styles.hoverable,
                                 {
-                                    [styles.active]: this.props.editMenuOpen
+                                    [styles.active]: this.props.editMenuOpen,
                                 }
                             )}
                             onMouseUp={this.props.onClickEdit}
@@ -529,7 +591,7 @@ class MenuBar extends React.Component {
                             <MenuBarMenu
                                 className={classNames(styles.menuBarMenu)}
                                 open={this.props.editMenuOpen}
-                                place={this.props.isRtl ? 'left' : 'right'}
+                                place={this.props.isRtl ? "left" : "right"}
                                 onRequestClose={this.props.onRequestCloseEdit}
                             >
                                 <DeletionRestorer>
@@ -539,7 +601,7 @@ class MenuBar extends React.Component {
                                     ) => (
                                         <MenuItem
                                             className={classNames({
-                                                [styles.disabled]: !restorable
+                                                [styles.disabled]: !restorable,
                                             })}
                                             onClick={this.handleRestoreOption(
                                                 handleRestore
@@ -575,7 +637,6 @@ class MenuBar extends React.Component {
                             </MenuBarMenu>
                         </div>
                     </div>
-
                     {/* 分割线 */}
                     <Divider className={classNames(styles.divider)} />
                     <div
@@ -593,7 +654,6 @@ class MenuBar extends React.Component {
                     </div>
                     {/* 分割线 */}
                     <Divider className={classNames(styles.divider)} />
-
                     {/* 增加的模块 */}
                     <div
                         className={classNames(
@@ -604,9 +664,23 @@ class MenuBar extends React.Component {
                     >
                         连接
                     </div>
-
+                    {/* 连接测试模块 */}
+                    <Divider className={classNames(styles.divider)} />
+                    &nbsp; &nbsp;
+                    <div
+                        className={classNames(
+                            styles.menuBarItem,
+                            styles.hoverable
+                            //styles.link_test
+                        )}
+                        style={linkStyle}
+                        onClick={this.handleClickTest}
+                    >
+                        连接测试
+                    </div>
+                    {/* 分割线 */}
+                    {/* <Divider className={classNames(styles.divider)} /> */}
                     {/* 搜索功能 */}
-
                     {/* {this.props.canEditTitle ? (
                         <div
                             className={classNames(
@@ -706,7 +780,18 @@ class MenuBar extends React.Component {
                 {/* 在account菜单中显示适当的UI，无论用户是否
                     登录，以及会话是否可用来登录 */}
                 <div className={styles.accountInfoGroup}>
-                    <div className={styles.menuBarItem}>
+                    {/* 新增版本号 */}
+                    <div
+                        className={classNames(
+                            styles.menuBarItem,
+                            styles.hoverable,
+                            styles.version
+                        )}
+                    >
+                        版本 1.1.0
+                    </div>
+
+                    {/* <div className={styles.menuBarItem}>
                         {this.props.canSave && <SaveStatus />}
                     </div>
                     {this.props.sessionExists ? (
@@ -733,7 +818,7 @@ class MenuBar extends React.Component {
                                         styles.hoverable,
                                         {
                                             [styles.active]: this.props
-                                                .accountMenuOpen
+                                                .accountMenuOpen,
                                         }
                                     )}
                                     isOpen={this.props.accountMenuOpen}
@@ -811,7 +896,7 @@ class MenuBar extends React.Component {
                                     <MenuBarItemTooltip
                                         id="account-nav"
                                         place={
-                                            this.props.isRtl ? 'right' : 'left'
+                                            this.props.isRtl ? "right" : "left"
                                         }
                                     >
                                         <div
@@ -825,7 +910,7 @@ class MenuBar extends React.Component {
                                                 className={styles.profileIcon}
                                                 src={profileIcon}
                                             />
-                                            <span>{'scratch-cat'}</span>
+                                            <span>{"scratch-cat"}</span>
                                             <img
                                                 className={
                                                     styles.dropdownCaretIcon
@@ -839,10 +924,10 @@ class MenuBar extends React.Component {
                                 []
                             )}
                         </React.Fragment>
-                    )}
+                    )} */}
                 </div>
             </Box>
-        )
+        );
     }
 }
 
@@ -898,17 +983,17 @@ MenuBar.propTypes = {
     sessionExists: PropTypes.bool,
     showComingSoon: PropTypes.bool,
     username: PropTypes.string,
-    vm: PropTypes.instanceOf(VM).isRequired
-}
+    vm: PropTypes.instanceOf(VM).isRequired,
+};
 
 MenuBar.defaultProps = {
-    onShare: () => {}
-}
+    onShare: () => {},
+};
 
-const mapStateToProps = state => {
-    const loadingState = state.scratchGui.projectState.loadingState
+const mapStateToProps = (state) => {
+    const loadingState = state.scratchGui.projectState.loadingState;
     const user =
-        state.session && state.session.session && state.session.session.user
+        state.session && state.session.session && state.session.session.user;
     return {
         accountMenuOpen: accountMenuOpen(state),
         fileMenuOpen: fileMenuOpen(state),
@@ -922,13 +1007,13 @@ const mapStateToProps = state => {
         projectChanged: state.scratchGui.projectChanged,
         projectTitle: state.scratchGui.projectTitle,
         sessionExists:
-            state.session && typeof state.session.session !== 'undefined',
+            state.session && typeof state.session.session !== "undefined",
         username: user ? user.username : null,
-        vm: state.scratchGui.vm
-    }
-}
+        vm: state.scratchGui.vm,
+    };
+};
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     autoUpdateProject: () => dispatch(autoUpdateProject()),
     onOpenTipLibrary: () => dispatch(openTipsLibrary()),
     onClickAccount: () => dispatch(openAccountMenu()),
@@ -941,16 +1026,13 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseLanguage: () => dispatch(closeLanguageMenu()),
     onClickLogin: () => dispatch(openLoginMenu()),
     onRequestCloseLogin: () => dispatch(closeLoginMenu()),
-    onClickNew: needSave => dispatch(requestNewProject(needSave)),
+    onClickNew: (needSave) => dispatch(requestNewProject(needSave)),
     onClickRemix: () => dispatch(remixProject()),
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
-    onSeeCommunity: () => dispatch(setPlayer(true))
-})
+    onSeeCommunity: () => dispatch(setPlayer(true)),
+});
 
 export default injectIntl(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(MenuBar)
-)
+    connect(mapStateToProps, mapDispatchToProps)(MenuBar)
+);

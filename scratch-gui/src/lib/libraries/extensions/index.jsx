@@ -1,37 +1,37 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import musicImage from './music.png'
-import musicInsetImage from './music-small.svg'
-import penImage from './pen.png'
-import penInsetImage from './pen-small.svg'
-import videoImage from './video-sensing.png'
-import videoInsetImage from './video-sensing-small.svg'
-import translateImage from './translate.png'
-import translateInsetImage from './translate-small.png'
-import microbitImage from './microbit.png'
-import ev3Image from './ev3.png'
-import wedoImage from './wedo.png'
-import text2speechImage from './text2speech.png'
-import text2speechInsetImage from './text2speech-small.svg'
-import makeymakeyImage from './makeymakey.png'
-import makeymakeyInsetImage from './makeymakey-small.svg'
-import boostImage from './boost.png'
-import boostInsetImage from './boost-small.svg'
+import musicImage from "./music.png";
+import musicInsetImage from "./music-small.svg";
+import penImage from "./pen.png";
+import penInsetImage from "./pen-small.svg";
+import videoImage from "./video-sensing.png";
+import videoInsetImage from "./video-sensing-small.svg";
+import translateImage from "./translate.png";
+import translateInsetImage from "./translate-small.png";
+import microbitImage from "./microbit.png";
+import ev3Image from "./ev3.png";
+import wedoImage from "./wedo.png";
+import text2speechImage from "./text2speech.png";
+import text2speechInsetImage from "./text2speech-small.svg";
+import makeymakeyImage from "./makeymakey.png";
+import makeymakeyInsetImage from "./makeymakey-small.svg";
+import boostImage from "./boost.png";
+import boostInsetImage from "./boost-small.svg";
 //增加内容
 // import helloworldImage from './helloworld.png';
 // import helloworldInsetImage from './helloworld-small.svg';
 
-import arduinoImage from './arduino.png'
-import arduinoInsetImage from './arduino-small.svg'
+import arduinoImage from "./arduino.png";
+import arduinoInsetImage from "./arduino-small.svg";
 
-import microbitPeripheralImage from './peripheral-connection/microbit/microbit-illustration.svg'
-import microbitMenuImage from './peripheral-connection/microbit/microbit-small.svg'
-import ev3PeripheralImage from './peripheral-connection/ev3/ev3-hub-illustration.svg'
-import ev3MenuImage from './peripheral-connection/ev3/ev3-small.svg'
-import wedoPeripheralImage from './peripheral-connection/wedo/wedo-illustration.svg'
-import wedoMenuImage from './peripheral-connection/wedo/wedo-small.svg'
-import wedoButtonImage from './peripheral-connection/wedo/wedo-button-illustration.svg'
+import microbitPeripheralImage from "./peripheral-connection/microbit/microbit-illustration.svg";
+import microbitMenuImage from "./peripheral-connection/microbit/microbit-small.svg";
+import ev3PeripheralImage from "./peripheral-connection/ev3/ev3-hub-illustration.svg";
+import ev3MenuImage from "./peripheral-connection/ev3/ev3-small.svg";
+import wedoPeripheralImage from "./peripheral-connection/wedo/wedo-illustration.svg";
+import wedoMenuImage from "./peripheral-connection/wedo/wedo-small.svg";
+import wedoButtonImage from "./peripheral-connection/wedo/wedo-button-illustration.svg";
 
 export default [
     // 增加内容
@@ -43,7 +43,7 @@ export default [
                 id="gui.extension.arduino.name"
             />
         ),
-        extensionId: 'arduino',
+        extensionId: "arduino",
         iconURL: arduinoImage,
         insetIconURL: arduinoInsetImage,
         description: (
@@ -64,7 +64,7 @@ export default [
                 id="gui.extension.music.name"
             />
         ),
-        extensionId: 'music',
+        extensionId: "music",
         iconURL: musicImage,
         insetIconURL: musicInsetImage,
         description: (
@@ -84,7 +84,7 @@ export default [
                 id="gui.extension.pen.name"
             />
         ),
-        extensionId: 'pen',
+        extensionId: "pen",
         iconURL: penImage,
         insetIconURL: penInsetImage,
         description: (
@@ -104,7 +104,7 @@ export default [
                 id="gui.extension.videosensing.name"
             />
         ),
-        extensionId: 'videoSensing',
+        extensionId: "videoSensing",
         iconURL: videoImage,
         insetIconURL: videoInsetImage,
         description: (
@@ -124,8 +124,8 @@ export default [
                 id="gui.extension.text2speech.name"
             />
         ),
-        extensionId: 'text2speech',
-        collaborator: 'Amazon Web Services',
+        extensionId: "text2speech",
+        collaborator: "Amazon Web Services",
         iconURL: text2speechImage,
         insetIconURL: text2speechInsetImage,
         description: (
@@ -146,8 +146,8 @@ export default [
                 id="gui.extension.translate.name"
             />
         ),
-        extensionId: 'translate',
-        collaborator: 'Google',
+        extensionId: "translate",
+        collaborator: "Google",
         iconURL: translateImage,
         insetIconURL: translateInsetImage,
         description: (
@@ -161,9 +161,9 @@ export default [
         internetConnectionRequired: true
     },
     {
-        name: 'Makey Makey',
-        extensionId: 'makeymakey',
-        collaborator: 'JoyLabz',
+        name: "Makey Makey",
+        extensionId: "makeymakey",
+        collaborator: "JoyLabz",
         iconURL: makeymakeyImage,
         insetIconURL: makeymakeyInsetImage,
         description: (
@@ -176,9 +176,9 @@ export default [
         featured: true
     },
     {
-        name: 'micro:bit',
-        extensionId: 'microbit',
-        collaborator: 'micro:bit',
+        name: "micro:bit",
+        extensionId: "microbit",
+        collaborator: "micro:bit",
         iconURL: microbitImage,
         insetIconURL: microbitMenuImage,
         description: (
@@ -203,12 +203,12 @@ export default [
                 id="gui.extension.microbit.connectingMessage"
             />
         ),
-        helpLink: 'https://scratch.mit.edu/microbit'
+        helpLink: "https://scratch.mit.edu/microbit"
     },
     {
-        name: 'LEGO MINDSTORMS EV3',
-        extensionId: 'ev3',
-        collaborator: 'LEGO',
+        name: "LEGO MINDSTORMS EV3",
+        extensionId: "ev3",
+        collaborator: "LEGO",
         iconURL: ev3Image,
         insetIconURL: ev3MenuImage,
         description: (
@@ -233,12 +233,12 @@ export default [
                 id="gui.extension.ev3.connectingMessage"
             />
         ),
-        helpLink: 'https://scratch.mit.edu/ev3'
+        helpLink: "https://scratch.mit.edu/ev3"
     },
     {
-        name: 'LEGO Education WeDo 2.0',
-        extensionId: 'wedo2',
-        collaborator: 'LEGO',
+        name: "LEGO Education WeDo 2.0",
+        extensionId: "wedo2",
+        collaborator: "LEGO",
         iconURL: wedoImage,
         insetIconURL: wedoMenuImage,
         description: (
@@ -264,12 +264,12 @@ export default [
                 id="gui.extension.wedo2.connectingMessage"
             />
         ),
-        helpLink: 'https://scratch.mit.edu/wedo'
+        helpLink: "https://scratch.mit.edu/wedo"
     },
     {
-        name: 'LEGO BOOST',
-        extensionId: 'boost',
-        collaborator: 'LEGO',
+        name: "LEGO BOOST",
+        extensionId: "boost",
+        collaborator: "LEGO",
         iconURL: boostImage,
         insetIconURL: boostInsetImage,
         description: (
@@ -327,4 +327,4 @@ export default [
     //     featured: true
     // },
     // arduino
-]
+];

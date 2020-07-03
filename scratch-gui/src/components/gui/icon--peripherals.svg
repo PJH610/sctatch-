@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>Sounds V1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Sounds-V1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M448 128h128V64a64 64 0 1 1 128 0v64h64a128 128 0 0 1 128 128v64h64a64 64 0 1 1 0 128h-64v128h64a64 64 0 1 1 0 128h-64v64a128 128 0 0 1-128 128h-64v64a64 64 0 1 1-128 0v-64h-128v64a64 64 0 1 1-128 0v-64H256a128 128 0 0 1-128-128v-64H64a64 64 0 1 1 0-128h64v-128H64a64 64 0 1 1 0-128h64V256a128 128 0 0 1 128-128h64V64a64 64 0 1 1 128 0v64zM256 256v512h512V256H256z" fill="#4C97FF"></path>
+    </g>
+</svg>
