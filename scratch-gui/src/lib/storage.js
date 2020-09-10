@@ -22,7 +22,7 @@ class Storage extends ScratchStorage {
             [
                 this.AssetType.ImageVector,
                 this.AssetType.ImageBitmap,
-                this.AssetType.Sound
+                this.AssetType.Sound,
             ],
             this.getAssetGetConfig.bind(this),
             // We set both the create and update configs to the same method because
@@ -33,7 +33,7 @@ class Storage extends ScratchStorage {
         );
         this.addWebStore(
             [this.AssetType.Sound],
-            asset =>
+            (asset) =>
                 `static/extension-assets/scratch3_music/${asset.assetId}.${asset.dataFormat}`
         );
     }
@@ -46,21 +46,21 @@ class Storage extends ScratchStorage {
     getProjectCreateConfig() {
         return {
             url: `${this.projectHost}/`,
-            withCredentials: true
+            withCredentials: true,
         };
     }
     getProjectUpdateConfig(projectAsset) {
         return {
             url: `${this.projectHost}/${projectAsset.assetId}`,
-            withCredentials: true
+            withCredentials: true,
         };
     }
     setAssetHost(assetHost) {
         this.assetHost = assetHost;
     }
     getAssetGetConfig(asset) {
-        return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
-        //return `${origin}/static/assets/${asset.assetId}.${asset.dataFormat}`;
+        // return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+        return `${origin}/static/assets/${asset.assetId}.${asset.dataFormat}`;
     }
     getAssetCreateConfig(asset) {
         return {
@@ -69,9 +69,9 @@ class Storage extends ScratchStorage {
             // assetId as part of the create URI. So, force the method to POST.
             // Then when storage finds this config to use for the "update", still POSTs
             method: "post",
-            url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
-            // url: `static/assets/${asset.assetId}.${asset.dataFormat}`,
-            withCredentials: true
+            // url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
+            url: `static/assets/${asset.assetId}.${asset.dataFormat}`,
+            withCredentials: true,
         };
     }
     setTranslatorFunction(translator) {
@@ -80,7 +80,7 @@ class Storage extends ScratchStorage {
     }
     cacheDefaultProject() {
         const defaultProjectAssets = defaultProject(this.translator);
-        defaultProjectAssets.forEach(asset =>
+        defaultProjectAssets.forEach((asset) =>
             this.builtinHelper._store(
                 this.AssetType[asset.assetType],
                 this.DataFormat[asset.dataFormat],

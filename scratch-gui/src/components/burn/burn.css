@@ -1,0 +1,55 @@
+@import "../../css/colors.css";
+
+.burn-active {
+    display: flex;
+    text-align: center;
+}
+
+.burn {
+    margin-left: 0.375rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.375rem;
+    border-radius: 0.25rem;
+    user-select: none;
+    user-drag: none;
+    cursor: pointer;
+}
+
+.burn:hover {
+    background-color: $motion-light-transparent;
+}
+
+.burn.is-active {
+    /* background-color: $motion-transparent; */
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+.burn-divs {
+    display: flex;
+    align-items: center; /*定义body的元素垂直居中*/
+    justify-content: center; /*定义body的里的元素水平居中*/
+}
+
+.burn-selects {
+    outline: none;
+    /* display: inline-block; */
+    margin-left: 0.375rem;
+    /* width: 3rem; */
+    border-radius: 0.375rem;
+    border-color: #bbd8fb;
+    background-color: #e5f1ff;
+    height: 1.75rem;
+    color: #4b4b4b;
+    /* line-height: 2rem; */
+    /* padding: 0.375rem; */
+}

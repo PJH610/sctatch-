@@ -16,6 +16,9 @@ import VM from "scratch-vm";
 import Renderer from "scratch-render";
 
 import Blocks from "../../containers/blocks.jsx";
+// new
+import CodeWrapper from "../../containers/code-wrapper.jsx";
+
 import CostumeTab from "../../containers/costume-tab.jsx";
 import TargetPane from "../../containers/target-pane.jsx";
 import SoundTab from "../../containers/sound-tab.jsx";
@@ -101,8 +104,9 @@ const GUIComponent = (props) => {
         onToggleLoginOpen,
         onUpdateProjectTitle,
         onActivateCostumesTab,
-        // 新增方法
-        onActivatePeripheralsTab,
+        // new 在激活外设选项卡上
+        // onActivatePeripheralsTab,
+
         onActivateSoundsTab,
         onActivateTab,
         onClickLogo,
@@ -116,6 +120,11 @@ const GUIComponent = (props) => {
         onTelemetryModalCancel,
         onTelemetryModalOptIn,
         onTelemetryModalOptOut,
+        // new
+        toolboxCutXML,
+        codeDebugData,
+        scrollBar,
+
         showComingSoon,
         soundsTabVisible,
         stageSizeMode,
@@ -302,8 +311,8 @@ const GUIComponent = (props) => {
                                                     id="gui.gui.soundsTab"
                                                 />
                                             </Tab>
-                                            {/* 离线代码 */}
-                                            <Tab
+                                            {/* new 离线代码 */}
+                                            {/* <Tab
                                                 className={tabClassNames.tab}
                                                 onClick={
                                                     onActivatePeripheralsTab
@@ -321,7 +330,7 @@ const GUIComponent = (props) => {
                                                     defaultMessage="离线代码"
                                                     id="gui.gui.peripheral"
                                                 />
-                                            </Tab>
+                                            </Tab> */}
                                         </TabList>
                                         <TabPanel
                                             className={tabClassNames.tabPanel}
@@ -384,6 +393,7 @@ const GUIComponent = (props) => {
                                                 <SoundTab vm={vm} />
                                             ) : null}
                                         </TabPanel>
+                                        {/* new TabPane  已删除*/}
                                     </Tabs>
                                     {backpackVisible ? (
                                         <Backpack host={backpackHost} />
@@ -396,20 +406,31 @@ const GUIComponent = (props) => {
                                         styles[stageSize]
                                     )}
                                 >
-                                    <StageWrapper
-                                        isRendererSupported={
-                                            isRendererSupported
-                                        }
-                                        isRtl={isRtl}
-                                        stageSize={stageSize}
-                                        vm={vm}
-                                    />
-                                    <Box className={styles.targetWrapper}>
-                                        <TargetPane
+                                    {toolboxCutXML ? (
+                                        <CodeWrapper
                                             stageSize={stageSize}
                                             vm={vm}
                                         />
-                                    </Box>
+                                    ) : (
+                                        <React.Fragment>
+                                            <StageWrapper
+                                                isRendererSupported={
+                                                    isRendererSupported
+                                                }
+                                                isRtl={isRtl}
+                                                stageSize={stageSize}
+                                                vm={vm}
+                                            />
+                                            <Box
+                                                className={styles.targetWrapper}
+                                            >
+                                                <TargetPane
+                                                    stageSize={stageSize}
+                                                    vm={vm}
+                                                />
+                                            </Box>
+                                        </React.Fragment>
+                                    )}
                                 </Box>
                             </Box>
                         </Box>
@@ -452,8 +473,8 @@ GUIComponent.propTypes = {
     isShared: PropTypes.bool,
     loading: PropTypes.bool,
     onActivateCostumesTab: PropTypes.func,
-    // 新增方法
-    onActivatePeripheralsTab: PropTypes.func,
+    // new
+    // onActivatePeripheralsTab: PropTypes.func,
     onActivateSoundsTab: PropTypes.func,
     onActivateTab: PropTypes.func,
     onClickAccountNav: PropTypes.func,
@@ -481,6 +502,9 @@ GUIComponent.propTypes = {
     telemetryModalVisible: PropTypes.bool,
     tipsLibraryVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
+    // new
+    toolboxCutXML: PropTypes.bool,
+    codeDebugData: PropTypes.array,
 };
 GUIComponent.defaultProps = {
     backpackHost: null,

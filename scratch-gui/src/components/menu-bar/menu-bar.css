@@ -229,3 +229,10 @@
     color: yellow;
     font-size: 0.8rem;
 }
+
+.switch-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 320px;
+}

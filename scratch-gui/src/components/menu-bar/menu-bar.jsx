@@ -62,6 +62,10 @@ import {
     loginMenuOpen,
 } from "../../reducers/menus";
 
+// new
+import { setToolboxCut } from "../../reducers/toolbox-cut";
+import SwitchoverComponent from "../switchover/switchover.jsx";
+
 import collectMetadata from "../../lib/collect-metadata";
 
 import styles from "./menu-bar.css";
@@ -156,6 +160,8 @@ class MenuBar extends React.Component {
             "restoreOptionMessage",
             "handleClickLink",
             "handleClickTest",
+            // new
+            "handleClickOnSetToolboxCut",
         ]);
         this.state = {
             link_state: false,
@@ -295,19 +301,27 @@ class MenuBar extends React.Component {
             }
         }
     }
+
+    // new 切换编程模式
+    handleClickOnSetToolboxCut() {
+        const toolboxCutXML = this.props.toolboxCutXML;
+        // console.log(this.props.toolboxCutXML);
+        this.props.setToolboxCut(!toolboxCutXML);
+    }
+
     // 打开link方法
     handleClickLink() {
-        console.log("点了点了");
-
         //var a = window.Blockly.getMainWorkspace()
         // console.log(typeof window.require != "undefined");
         if (typeof window.require == "undefined") {
             alert("当前为浏览器环境,请手动打开link_le连接主板!!!");
             return;
         }
-        var path = window.require("path");
+        const path = window.require("path");
+        const { remote } = window.require("electron");
+        const base_path = path.dirname(remote.app.getPath("exe"));
         // 相对路径
-        var execPath = path.dirname(process.execPath) + "/link_le/link_le.exe";
+        var execPath = base_path + "/link_le/link_le.exe";
 
         const exe = window.require("child_process").exec; //开一个子进程
         //'C:/arduino/link_le/link_le.exe'
@@ -319,9 +333,20 @@ class MenuBar extends React.Component {
             }
         });
 
-        // var electron = window.require('electron')
-        // var ipc = electron.ipcRenderer
-        // ipc.send('getMsg', 'open')
+        // var electron = window.require("electron");
+        // var ipc = electron.ipcRenderer;
+        // ipc.send("getMsg", "open");
+        // console.log("页面端运行到了这里!!");
+
+        // let code = ``;
+
+        // let filePath = "C:/Users/yanfa-00/Desktop/aaa/aaa.ino";
+        // let fs = window.require("fs"); //文件
+        // fs.writeFile(filePath, code, function (err) {
+        //     if (err) {
+        //         return console.error(err);
+        //     }
+        // });
     }
 
     // 连接测试
@@ -418,6 +443,7 @@ class MenuBar extends React.Component {
             <Box className={classNames(this.props.className, styles.menuBar)}>
                 <div className={styles.mainMenu}>
                     <div className={styles.fileGroup}>
+                        {/* logo */}
                         <div className={classNames(styles.menuBarItem)}>
                             <img
                                 alt="Scratch"
@@ -431,6 +457,7 @@ class MenuBar extends React.Component {
                                 onClick={this.props.onClickLogo}
                             />
                         </div>
+                        {/* 语言 */}
                         <div
                             className={classNames(
                                 styles.menuBarItem,
@@ -454,6 +481,7 @@ class MenuBar extends React.Component {
                                 )}
                             />
                         </div>
+                        {/* 文件模块 保存 上传 */}
                         <div
                             className={classNames(
                                 styles.menuBarItem,
@@ -475,6 +503,7 @@ class MenuBar extends React.Component {
                                 place={this.props.isRtl ? "left" : "right"}
                                 onRequestClose={this.props.onRequestCloseFile}
                             >
+                                {/* 新作品 */}
                                 <MenuSection>
                                     <MenuItem
                                         isRtl={this.props.isRtl}
@@ -483,6 +512,7 @@ class MenuBar extends React.Component {
                                         {newProjectMessage}
                                     </MenuItem>
                                 </MenuSection>
+                                {/* 三个条件 满足在成执行 */}
                                 {(this.props.canSave ||
                                     this.props.canCreateCopy ||
                                     this.props.canRemix) && (
@@ -519,6 +549,7 @@ class MenuBar extends React.Component {
                                     </MenuSection>
                                 )}
                                 <MenuSection>
+                                    {/* 从电脑上传 */}
                                     <SBFileUploader
                                         onUpdateProjectTitle={
                                             this.props.onUpdateProjectTitle
@@ -544,6 +575,7 @@ class MenuBar extends React.Component {
                                             </MenuItem>
                                         )}
                                     </SBFileUploader>
+                                    {/* 保存到电脑 */}
                                     <SB3Downloader>
                                         {(
                                             className,
@@ -639,6 +671,7 @@ class MenuBar extends React.Component {
                     </div>
                     {/* 分割线 */}
                     <Divider className={classNames(styles.divider)} />
+                    {/* 教程 */}
                     <div
                         aria-label={this.props.intl.formatMessage(
                             ariaMessages.tutorials
@@ -652,32 +685,39 @@ class MenuBar extends React.Component {
                         <img className={styles.helpIcon} src={helpIcon} />
                         <FormattedMessage {...ariaMessages.tutorials} />
                     </div>
-                    {/* 分割线 */}
-                    <Divider className={classNames(styles.divider)} />
-                    {/* 增加的模块 */}
-                    <div
-                        className={classNames(
-                            styles.menuBarItem,
-                            styles.hoverable
-                        )}
-                        onClick={this.handleClickLink}
-                    >
-                        连接
-                    </div>
-                    {/* 连接测试模块 */}
-                    <Divider className={classNames(styles.divider)} />
-                    &nbsp; &nbsp;
-                    <div
-                        className={classNames(
-                            styles.menuBarItem,
-                            styles.hoverable
-                            //styles.link_test
-                        )}
-                        style={linkStyle}
-                        onClick={this.handleClickTest}
-                    >
-                        连接测试
-                    </div>
+                    {this.props.toolboxCutXML ? (
+                        ""
+                    ) : (
+                        <>
+                            {/* 分割线 */}
+                            <Divider className={classNames(styles.divider)} />
+                            {/* 增加的模块 */}
+                            <div
+                                className={classNames(
+                                    styles.menuBarItem,
+                                    styles.hoverable
+                                )}
+                                onClick={this.handleClickLink}
+                            >
+                                连接link
+                            </div>
+                            {/* 连接测试模块 */}
+                            <Divider className={classNames(styles.divider)} />
+                            &nbsp;
+                            <div
+                                className={classNames(
+                                    styles.menuBarItem,
+                                    styles.hoverable
+                                    //styles.link_test
+                                )}
+                                style={linkStyle}
+                                onClick={this.handleClickTest}
+                            >
+                                连接测试
+                            </div>
+                        </>
+                    )}
+
                     {/* 分割线 */}
                     {/* <Divider className={classNames(styles.divider)} /> */}
                     {/* 搜索功能 */}
@@ -779,6 +819,20 @@ class MenuBar extends React.Component {
                 {/* 登录模块 */}
                 {/* 在account菜单中显示适当的UI，无论用户是否
                     登录，以及会话是否可用来登录 */}
+
+                {/* new 切换代码模式 */}
+                {/* <div
+                    className={classNames(styles.menuBarItem, styles.hoverable)}
+                    onClick={this.handleClickonSetToolboxCut}
+                >
+                    {this.props.toolboxCutXML ? "代码模式" : "在线模式"}
+                </div> */}
+                <div className={styles.switchCenter}>
+                    <SwitchoverComponent
+                        clickOnSetToolboxCut={this.handleClickOnSetToolboxCut}
+                    />
+                </div>
+
                 <div className={styles.accountInfoGroup}>
                     {/* 新增版本号 */}
                     <div
@@ -788,7 +842,7 @@ class MenuBar extends React.Component {
                             styles.version
                         )}
                     >
-                        版本 1.1.0
+                        版本 2.0.0
                     </div>
 
                     {/* <div className={styles.menuBarItem}>
@@ -984,6 +1038,9 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     username: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired,
+    // new
+    toolboxCutXML: PropTypes.bool,
+    setToolboxCut: PropTypes.func,
 };
 
 MenuBar.defaultProps = {
@@ -1010,6 +1067,8 @@ const mapStateToProps = (state) => {
             state.session && typeof state.session.session !== "undefined",
         username: user ? user.username : null,
         vm: state.scratchGui.vm,
+        // new
+        toolboxCutXML: state.scratchGui.toolboxCut.toolboxCutXML,
     };
 };
 
@@ -1031,6 +1090,8 @@ const mapDispatchToProps = (dispatch) => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true)),
+    // new
+    setToolboxCut: (data) => dispatch(setToolboxCut(data)),
 });
 
 export default injectIntl(

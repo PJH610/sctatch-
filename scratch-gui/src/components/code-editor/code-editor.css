@@ -1,0 +1,32 @@
+@import "../../css/units.css";
+@import "../../css/colors.css";
+@import "../../css/z-index.css";
+
+.wrapper-overlay {
+    position: fixed;
+    top: $stage-menu-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: $z-index-stage-wrapper-overlay;
+    background-color: $ui-white;
+    padding: $stage-full-screen-stage-padding;
+}
+
+.button {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+}
+
+:global(.CodeMirror) {
+    height: 100%;
+    background: #f9f9f9;
+    border-radius: 0.5rem;
+    border: 1px solid hsla(0, 0%, 0%, 0.15);
+}
+
+:global(.CodeMirror-scroll) {
+    width: 100%;
+    overflow-x: hidden !important;
+}

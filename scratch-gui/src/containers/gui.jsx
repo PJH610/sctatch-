@@ -14,8 +14,6 @@ import {
     BLOCKS_TAB_INDEX,
     COSTUMES_TAB_INDEX,
     SOUNDS_TAB_INDEX,
-    // 新增
-    PERIPHERALS_TAB_INDEX,
 } from "../reducers/editor-tab";
 
 import {
@@ -103,6 +101,7 @@ class GUI extends React.Component {
             fetchingProject,
             isLoading,
             loadingStateVisible,
+
             ...componentProps
         } = this.props;
         return (
@@ -169,9 +168,11 @@ const mapStateToProps = (state) => {
         isRtl: state.locales.isRtl,
         isShowingProject: getIsShowingProject(loadingState),
         loadingStateVisible: state.scratchGui.modals.loadingProject,
-        // 新增
-        peripheralsTabVisible:
-            state.scratchGui.editorTab.activeTabIndex === PERIPHERALS_TAB_INDEX,
+        // new
+        toolboxCutXML: state.scratchGui.toolboxCut.toolboxCutXML,
+        codeDebugData: state.scratchGui.codeDebug.codeDebugData,
+        scrollBar: state.scratchGui.codeDebug.scrollBar,
+
         projectId: state.scratchGui.projectState.projectId,
         soundsTabVisible:
             state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
@@ -190,9 +191,9 @@ const mapDispatchToProps = (dispatch) => ({
     onActivateTab: (tab) => dispatch(activateTab(tab)),
     onActivateCostumesTab: () => dispatch(activateTab(COSTUMES_TAB_INDEX)),
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
-    // 新增
-    onActivatePeripheralsTab: () =>
-        dispatch(activateTab(PERIPHERALS_TAB_INDEX)),
+    // new 一个dispatch
+    // onActivatePeripheralsTab: () =>
+    //     dispatch(activateTab(PERIPHERALS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
     onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
