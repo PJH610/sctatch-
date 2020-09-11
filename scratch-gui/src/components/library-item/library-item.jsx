@@ -1,25 +1,27 @@
-import {FormattedMessage} from 'react-intl';
-import PropTypes from 'prop-types';
-import React from 'react';
+import { FormattedMessage } from "react-intl";
+import PropTypes from "prop-types";
+import React from "react";
 
-import Box from '../box/box.jsx';
-import ScratchImage from '../scratch-image/scratch-image.jsx';
-import styles from './library-item.css';
-import classNames from 'classnames';
+import Box from "../box/box.jsx";
+import ScratchImage from "../scratch-image/scratch-image.jsx";
+import styles from "./library-item.css";
+import classNames from "classnames";
 
-import bluetoothIconURL from './bluetooth.svg';
-import internetConnectionIconURL from './internet-connection.svg';
+import bluetoothIconURL from "./bluetooth.svg";
+import internetConnectionIconURL from "./internet-connection.svg";
+import portIconURL from "./port.svg";
 
 /* eslint-disable react/prefer-stateless-function */
 class LibraryItemComponent extends React.PureComponent {
-    render () {
+    render() {
+        // console.log("lib:", this.props);
         return this.props.featured ? (
             <div
                 className={classNames(
                     styles.libraryItem,
                     styles.featuredItem,
                     {
-                        [styles.disabled]: this.props.disabled
+                        [styles.disabled]: this.props.disabled,
                     },
                     this.props.extensionId ? styles.libraryItemExtension : null,
                     this.props.hidden ? styles.hidden : null
@@ -52,18 +54,32 @@ class LibraryItemComponent extends React.PureComponent {
                     </div>
                 ) : null}
                 <div
-                    className={this.props.extensionId ?
-                        classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
+                    className={
+                        this.props.extensionId
+                            ? classNames(
+                                  styles.featuredExtensionText,
+                                  styles.featuredText
+                              )
+                            : styles.featuredText
                     }
                 >
-                    <span className={styles.libraryItemName}>{this.props.name}</span>
+                    <span className={styles.libraryItemName}>
+                        {this.props.name}
+                    </span>
                     <br />
-                    <span className={styles.featuredDescription}>{this.props.description}</span>
+                    <span className={styles.featuredDescription}>
+                        {this.props.description}
+                    </span>
                 </div>
-                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
+                {this.props.bluetoothRequired ||
+                this.props.internetConnectionRequired ||
+                this.props.portRequired ||
+                this.props.collaborator ? (
                     <div className={styles.featuredExtensionMetadata}>
                         <div className={styles.featuredExtensionRequirement}>
-                            {this.props.bluetoothRequired || this.props.internetConnectionRequired ? (
+                            {this.props.bluetoothRequired ||
+                            this.props.internetConnectionRequired ||
+                            this.props.portRequired ? (
                                 <div>
                                     <div>
                                         <FormattedMessage
@@ -73,13 +89,21 @@ class LibraryItemComponent extends React.PureComponent {
                                         />
                                     </div>
                                     <div
-                                        className={styles.featuredExtensionMetadataDetail}
+                                        className={
+                                            styles.featuredExtensionMetadataDetail
+                                        }
                                     >
+                                        {this.props.portRequired ? (
+                                            <img src={portIconURL} />
+                                        ) : null}
                                         {this.props.bluetoothRequired ? (
                                             <img src={bluetoothIconURL} />
                                         ) : null}
-                                        {this.props.internetConnectionRequired ? (
-                                            <img src={internetConnectionIconURL} />
+                                        {this.props
+                                            .internetConnectionRequired ? (
+                                            <img
+                                                src={internetConnectionIconURL}
+                                            />
                                         ) : null}
                                     </div>
                                 </div>
@@ -96,7 +120,9 @@ class LibraryItemComponent extends React.PureComponent {
                                         />
                                     </div>
                                     <div
-                                        className={styles.featuredExtensionMetadataDetail}
+                                        className={
+                                            styles.featuredExtensionMetadataDetail
+                                        }
                                     >
                                         {this.props.collaborator}
                                     </div>
@@ -130,21 +156,19 @@ class LibraryItemComponent extends React.PureComponent {
                         />
                     </Box>
                 </Box>
-                <span className={styles.libraryItemName}>{this.props.name}</span>
+                <span className={styles.libraryItemName}>
+                    {this.props.name}
+                </span>
             </Box>
         );
     }
 }
 /* eslint-enable react/prefer-stateless-function */
 
-
 LibraryItemComponent.propTypes = {
     bluetoothRequired: PropTypes.bool,
     collaborator: PropTypes.string,
-    description: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node
-    ]),
+    description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     disabled: PropTypes.bool,
     extensionId: PropTypes.string,
     featured: PropTypes.bool,
@@ -152,20 +176,19 @@ LibraryItemComponent.propTypes = {
     iconSource: ScratchImage.ImageSourcePropType,
     insetIconURL: PropTypes.string,
     internetConnectionRequired: PropTypes.bool,
-    name: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node
-    ]),
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     onBlur: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     onFocus: PropTypes.func.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onMouseEnter: PropTypes.func.isRequired,
-    onMouseLeave: PropTypes.func.isRequired
+    onMouseLeave: PropTypes.func.isRequired,
+    // new
+    portRequired: PropTypes.bool,
 };
 
 LibraryItemComponent.defaultProps = {
-    disabled: false
+    disabled: false,
 };
 
 export default LibraryItemComponent;

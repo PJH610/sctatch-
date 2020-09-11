@@ -134,7 +134,7 @@ class ArduinoBlocks {
             colour: "#58A0F2",
             colourSecondary: "#AACBF2",
             colourTertiary: "#58A0F2",
-            name: "LETOPO-UNO",
+            name: "letopo-uno",
             menuIconURI: menuIconURI,
             blockIconURI: blockIconURI,
             //showStatusButton: true,

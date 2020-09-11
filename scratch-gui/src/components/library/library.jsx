@@ -1,143 +1,143 @@
-import classNames from 'classnames'
-import bindAll from 'lodash.bindall'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { defineMessages, injectIntl, intlShape } from 'react-intl'
+import classNames from "classnames";
+import bindAll from "lodash.bindall";
+import PropTypes from "prop-types";
+import React from "react";
+import { defineMessages, injectIntl, intlShape } from "react-intl";
 
-import LibraryItem from '../../containers/library-item.jsx'
-import Modal from '../../containers/modal.jsx'
-import Divider from '../divider/divider.jsx'
-import Filter from '../filter/filter.jsx'
-import TagButton from '../../containers/tag-button.jsx'
-import storage from '../../lib/storage'
+import LibraryItem from "../../containers/library-item.jsx";
+import Modal from "../../containers/modal.jsx";
+import Divider from "../divider/divider.jsx";
+import Filter from "../filter/filter.jsx";
+import TagButton from "../../containers/tag-button.jsx";
+import storage from "../../lib/storage";
 
-import styles from './library.css'
+import styles from "./library.css";
 
 const messages = defineMessages({
     filterPlaceholder: {
-        id: 'gui.library.filterPlaceholder',
-        defaultMessage: 'Search',
-        description: 'Placeholder text for library search field'
+        id: "gui.library.filterPlaceholder",
+        defaultMessage: "Search",
+        description: "Placeholder text for library search field",
     },
     allTag: {
-        id: 'gui.library.allTag',
-        defaultMessage: 'All',
+        id: "gui.library.allTag",
+        defaultMessage: "All",
         description:
-            'Label for library tag to revert to all items after filtering by tag.'
-    }
-})
+            "Label for library tag to revert to all items after filtering by tag.",
+    },
+});
 
-const ALL_TAG = { tag: 'all', intlLabel: messages.allTag }
-const tagListPrefix = [ALL_TAG]
+const ALL_TAG = { tag: "all", intlLabel: messages.allTag };
+const tagListPrefix = [ALL_TAG];
 
 /**
  * Find the AssetType which corresponds to a particular file extension. For example, 'png' => AssetType.ImageBitmap.
  * @param {string} fileExtension - the file extension to look up.
  * @returns {AssetType} - the AssetType corresponding to the extension, if any.
  */
-const getAssetTypeForFileExtension = function(fileExtension) {
+const getAssetTypeForFileExtension = function (fileExtension) {
     const compareOptions = {
-        sensitivity: 'accent',
-        usage: 'search'
-    }
+        sensitivity: "accent",
+        usage: "search",
+    };
     for (const assetTypeId of Object.keys(storage.AssetType)) {
-        const assetType = storage.AssetType[assetTypeId]
+        const assetType = storage.AssetType[assetTypeId];
         if (
             fileExtension.localeCompare(
                 assetType.runtimeFormat,
                 compareOptions
             ) === 0
         ) {
-            return assetType
+            return assetType;
         }
     }
-}
+};
 
 /**
  * Figure out an `imageSource` (URI or asset ID & type) for a library item's icon.
  * @param {object} item - either a library item or one of a library item's costumes.
  * @returns {object} - an `imageSource` ready to be passed to a `ScratchImage`.
  */
-const getItemImageSource = function(item) {
+const getItemImageSource = function (item) {
     if (item.rawURL) {
         return {
-            uri: item.rawURL
-        }
+            uri: item.rawURL,
+        };
     }
 
     // TODO: 调整库使其更易于存储;这里不要使用split()。
-    const md5 = item.md5 || item.baseLayerMD5
+    const md5 = item.md5 || item.baseLayerMD5;
     if (md5) {
-        const [assetId, fileExtension] = md5.split('.')
+        const [assetId, fileExtension] = md5.split(".");
         return {
             assetId: assetId,
-            assetType: getAssetTypeForFileExtension(fileExtension)
-        }
+            assetType: getAssetTypeForFileExtension(fileExtension),
+        };
     }
-}
+};
 
 class LibraryComponent extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         bindAll(this, [
-            'handleClose',
-            'handleFilterChange',
-            'handleFilterClear',
-            'handleMouseEnter',
-            'handleMouseLeave',
-            'handleSelect',
-            'handleTagClick',
-            'setFilteredDataRef'
-        ])
+            "handleClose",
+            "handleFilterChange",
+            "handleFilterClear",
+            "handleMouseEnter",
+            "handleMouseLeave",
+            "handleSelect",
+            "handleTagClick",
+            "setFilteredDataRef",
+        ]);
         this.state = {
             selectedItem: null,
-            filterQuery: '',
-            selectedTag: ALL_TAG.tag
-        }
+            filterQuery: "",
+            selectedTag: ALL_TAG.tag,
+        };
     }
     componentDidUpdate(prevProps, prevState) {
         if (
             prevState.filterQuery !== this.state.filterQuery ||
             prevState.selectedTag !== this.state.selectedTag
         ) {
-            this.scrollToTop()
+            this.scrollToTop();
         }
     }
     handleSelect(id) {
-        this.handleClose()
-        this.props.onItemSelected(this.getFilteredData()[id])
+        this.handleClose();
+        this.props.onItemSelected(this.getFilteredData()[id]);
     }
     handleClose() {
-        this.props.onRequestClose()
+        this.props.onRequestClose();
     }
     handleTagClick(tag) {
         this.setState({
-            filterQuery: '',
-            selectedTag: tag.toLowerCase()
-        })
+            filterQuery: "",
+            selectedTag: tag.toLowerCase(),
+        });
     }
     handleMouseEnter(id) {
         if (this.props.onItemMouseEnter)
-            this.props.onItemMouseEnter(this.getFilteredData()[id])
+            this.props.onItemMouseEnter(this.getFilteredData()[id]);
     }
     handleMouseLeave(id) {
         if (this.props.onItemMouseLeave)
-            this.props.onItemMouseLeave(this.getFilteredData()[id])
+            this.props.onItemMouseLeave(this.getFilteredData()[id]);
     }
     handleFilterChange(event) {
         this.setState({
             filterQuery: event.target.value,
-            selectedTag: ALL_TAG.tag
-        })
+            selectedTag: ALL_TAG.tag,
+        });
     }
     handleFilterClear() {
-        this.setState({ filterQuery: '' })
+        this.setState({ filterQuery: "" });
     }
     getFilteredData() {
-        if (this.state.selectedTag === 'all') {
-            if (!this.state.filterQuery) return this.props.data
+        if (this.state.selectedTag === "all") {
+            if (!this.state.filterQuery) return this.props.data;
             return this.props.data.filter(
-                dataItem =>
+                (dataItem) =>
                     (dataItem.tags || [])
                         // 映射设置“this”的第二个参数
                         .map(
@@ -146,7 +146,7 @@ class LibraryComponent extends React.Component {
                         )
                         .concat(
                             dataItem.name
-                                ? (typeof dataItem.name === 'string'
+                                ? (typeof dataItem.name === "string"
                                       ? // 如果是字符串，则使用名称，否则使用formatMessage获取翻译后的名称
                                         dataItem.name
                                       : this.props.intl.formatMessage(
@@ -155,12 +155,12 @@ class LibraryComponent extends React.Component {
                                   ).toLowerCase()
                                 : null
                         )
-                        .join('\n') // 不太可能部分匹配新行
+                        .join("\n") // 不太可能部分匹配新行
                         .indexOf(this.state.filterQuery.toLowerCase()) !== -1
-            )
+            );
         }
         return this.props.data.filter(
-            dataItem =>
+            (dataItem) =>
                 dataItem.tags &&
                 dataItem.tags
                     .map(
@@ -168,15 +168,16 @@ class LibraryComponent extends React.Component {
                         String.prototype.toLowerCase
                     )
                     .indexOf(this.state.selectedTag) !== -1
-        )
+        );
     }
     scrollToTop() {
-        this.filteredDataRef.scrollTop = 0
+        this.filteredDataRef.scrollTop = 0;
     }
     setFilteredDataRef(ref) {
-        this.filteredDataRef = ref
+        this.filteredDataRef = ref;
     }
     render() {
+        // console.log("外lib:", this.props);
         return (
             <Modal
                 fullScreen
@@ -236,17 +237,19 @@ class LibraryComponent extends React.Component {
                 <div
                     className={classNames(styles.libraryScrollGrid, {
                         [styles.withFilterBar]:
-                            this.props.filterable || this.props.tags
+                            this.props.filterable || this.props.tags,
                     })}
                     ref={this.setFilteredDataRef}
                 >
                     {this.getFilteredData().map((dataItem, index) => {
-                        const iconSource = getItemImageSource(dataItem)
+                        const iconSource = getItemImageSource(dataItem);
                         const icons =
                             dataItem.json &&
-                            dataItem.json.costumes.map(getItemImageSource)
+                            dataItem.json.costumes.map(getItemImageSource);
                         return (
                             <LibraryItem
+                                // new
+                                portRequired={dataItem.portRequired}
                                 bluetoothRequired={dataItem.bluetoothRequired}
                                 collaborator={dataItem.collaborator}
                                 description={dataItem.description}
@@ -267,11 +270,11 @@ class LibraryComponent extends React.Component {
                                 onMouseLeave={this.handleMouseLeave}
                                 onSelect={this.handleSelect}
                             />
-                        )
+                        );
                     })}
                 </div>
             </Modal>
-        )
+        );
     }
 }
 
@@ -283,7 +286,7 @@ LibraryComponent.propTypes = {
             // @todo remove md5/rawURL prop from library, refactor to use storage
             md5: PropTypes.string,
             name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-            rawURL: PropTypes.string
+            rawURL: PropTypes.string,
         })
         /* eslint-enable react/no-unused-prop-types, lines-around-comment */
     ),
@@ -295,11 +298,11 @@ LibraryComponent.propTypes = {
     onItemSelected: PropTypes.func,
     onRequestClose: PropTypes.func,
     tags: PropTypes.arrayOf(PropTypes.shape(TagButton.propTypes)),
-    title: PropTypes.string.isRequired
-}
+    title: PropTypes.string.isRequired,
+};
 
 LibraryComponent.defaultProps = {
-    filterable: true
-}
+    filterable: true,
+};
 
-export default injectIntl(LibraryComponent)
+export default injectIntl(LibraryComponent);

@@ -38,12 +38,15 @@ export default [
     {
         name: (
             <FormattedMessage
-                defaultMessage="LETOPO-UNO"
+                defaultMessage="letopo-uno"
                 description="Name for the 'arduino' extension"
                 id="gui.extension.arduino.name"
             />
         ),
         extensionId: "arduino",
+        // 合作者
+        collaborator: "Letopo",
+
         iconURL: arduinoImage,
         insetIconURL: arduinoInsetImage,
         description: (
@@ -53,7 +56,27 @@ export default [
                 id="gui.extension.arduino.description"
             />
         ),
-        featured: true
+        featured: true,
+        // disabled: false,
+        // 系统是否需要串口
+        portRequired: true,
+        // 系统是否需要蓝牙
+        // bluetoothRequired: true,
+        // 系统是否需要联网
+        // internetConnectionRequired: true,
+        // 启动外围连接流
+        // launchPeripheralConnectionFlow: true,
+        // 自动扫描
+        // useAutoScan: false,
+        // peripheralImage: ev3PeripheralImage,
+        // smallPeripheralImage: ev3MenuImage,
+        // connectingMessage: (
+        //     <FormattedMessage
+        //         defaultMessage="Connecting. Make sure the pin on your EV3 is set to 1234."
+        //         description="Message to help people connect to their EV3. Must note the PIN should be 1234."
+        //         id="gui.extension.ev3.connectingMessage"
+        //     />
+        // ),
         // disabled: true
     },
     {
@@ -74,7 +97,7 @@ export default [
                 id="gui.extension.music.description"
             />
         ),
-        featured: true
+        featured: true,
     },
     {
         name: (
@@ -94,7 +117,7 @@ export default [
                 id="gui.extension.pen.description"
             />
         ),
-        featured: true
+        featured: true,
     },
     {
         name: (
@@ -114,7 +137,7 @@ export default [
                 id="gui.extension.videosensing.description"
             />
         ),
-        featured: true
+        featured: true,
     },
     {
         name: (
@@ -136,7 +159,7 @@ export default [
             />
         ),
         featured: true,
-        internetConnectionRequired: true
+        internetConnectionRequired: true,
     },
     {
         name: (
@@ -158,7 +181,7 @@ export default [
             />
         ),
         featured: true,
-        internetConnectionRequired: true
+        internetConnectionRequired: true,
     },
     {
         name: "Makey Makey",
@@ -173,7 +196,7 @@ export default [
                 id="gui.extension.makeymakey.description"
             />
         ),
-        featured: true
+        featured: true,
     },
     {
         name: "micro:bit",
@@ -203,7 +226,7 @@ export default [
                 id="gui.extension.microbit.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/microbit"
+        helpLink: "https://scratch.mit.edu/microbit",
     },
     {
         name: "LEGO MINDSTORMS EV3",
@@ -233,7 +256,7 @@ export default [
                 id="gui.extension.ev3.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/ev3"
+        helpLink: "https://scratch.mit.edu/ev3",
     },
     {
         name: "LEGO Education WeDo 2.0",
@@ -264,7 +287,7 @@ export default [
                 id="gui.extension.wedo2.connectingMessage"
             />
         ),
-        helpLink: "https://scratch.mit.edu/wedo"
+        helpLink: "https://scratch.mit.edu/wedo",
     },
     {
         name: "LEGO BOOST",
@@ -280,10 +303,10 @@ export default [
             />
         ),
         featured: true,
-        disabled: true,
+        disabled: false,
         bluetoothRequired: true,
-        internetConnectionRequired: true
-    }
+        internetConnectionRequired: true,
+    },
     //增加内容
     // {
     //     name: (

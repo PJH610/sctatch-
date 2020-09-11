@@ -1,93 +1,105 @@
-import bindAll from 'lodash.bindall';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {injectIntl} from 'react-intl';
+import bindAll from "lodash.bindall";
+import PropTypes from "prop-types";
+import React from "react";
+import { injectIntl } from "react-intl";
 
-import LibraryItemComponent from '../components/library-item/library-item.jsx';
+import LibraryItemComponent from "../components/library-item/library-item.jsx";
 
 class LibraryItem extends React.PureComponent {
-    constructor (props) {
+    constructor(props) {
         super(props);
         bindAll(this, [
-            'handleBlur',
-            'handleClick',
-            'handleFocus',
-            'handleKeyPress',
-            'handleMouseEnter',
-            'handleMouseLeave',
-            'rotateIcon',
-            'startRotatingIcons',
-            'stopRotatingIcons'
+            "handleBlur",
+            "handleClick",
+            "handleFocus",
+            "handleKeyPress",
+            "handleMouseEnter",
+            "handleMouseLeave",
+            "rotateIcon",
+            "startRotatingIcons",
+            "stopRotatingIcons",
         ]);
         this.state = {
             iconIndex: 0,
-            isRotatingIcon: false
+            isRotatingIcon: false,
         };
     }
-    componentWillUnmount () {
+    componentWillUnmount() {
         clearInterval(this.intervalId);
     }
-    handleBlur (id) {
+    handleBlur(id) {
         this.handleMouseLeave(id);
     }
-    handleClick (e) {
+    handleClick(e) {
         if (!this.props.disabled) {
             this.props.onSelect(this.props.id);
         }
         e.preventDefault();
     }
-    handleFocus (id) {
+    handleFocus(id) {
         this.handleMouseEnter(id);
     }
-    handleKeyPress (e) {
-        if (e.key === ' ' || e.key === 'Enter') {
+    handleKeyPress(e) {
+        if (e.key === " " || e.key === "Enter") {
             e.preventDefault();
             this.props.onSelect(this.props.id);
         }
     }
-    handleMouseEnter () {
+    handleMouseEnter() {
         this.props.onMouseEnter(this.props.id);
         if (this.props.icons && this.props.icons.length) {
             this.stopRotatingIcons();
-            this.setState({
-                isRotatingIcon: true
-            }, this.startRotatingIcons);
+            this.setState(
+                {
+                    isRotatingIcon: true,
+                },
+                this.startRotatingIcons
+            );
         }
     }
-    handleMouseLeave () {
+    handleMouseLeave() {
         this.props.onMouseLeave(this.props.id);
         if (this.props.icons && this.props.icons.length) {
-            this.setState({
-                isRotatingIcon: false
-            }, this.stopRotatingIcons);
+            this.setState(
+                {
+                    isRotatingIcon: false,
+                },
+                this.stopRotatingIcons
+            );
         }
     }
-    startRotatingIcons () {
+    startRotatingIcons() {
         this.rotateIcon();
         this.intervalId = setInterval(this.rotateIcon, 300);
     }
-    stopRotatingIcons () {
+    stopRotatingIcons() {
         if (this.intervalId) {
             this.intervalId = clearInterval(this.intervalId);
         }
     }
-    rotateIcon () {
-        const nextIconIndex = (this.state.iconIndex + 1) % this.props.icons.length;
-        this.setState({iconIndex: nextIconIndex});
+    rotateIcon() {
+        const nextIconIndex =
+            (this.state.iconIndex + 1) % this.props.icons.length;
+        this.setState({ iconIndex: nextIconIndex });
     }
-    curIconSource () {
-        if (this.props.icons &&
+    curIconSource() {
+        if (
+            this.props.icons &&
             this.state.isRotatingIcon &&
             this.state.iconIndex < this.props.icons.length &&
-            this.props.icons[this.state.iconIndex]) {
+            this.props.icons[this.state.iconIndex]
+        ) {
             return this.props.icons[this.state.iconIndex];
         }
         return this.props.iconSource;
     }
-    render () {
+    render() {
+        // console.log("c lib:", this.props);
         const iconSource = this.curIconSource();
         return (
             <LibraryItemComponent
+                // new
+                portRequired={this.props.portRequired}
                 bluetoothRequired={this.props.bluetoothRequired}
                 collaborator={this.props.collaborator}
                 description={this.props.description}
@@ -98,7 +110,9 @@ class LibraryItem extends React.PureComponent {
                 iconSource={iconSource}
                 id={this.props.id}
                 insetIconURL={this.props.insetIconURL}
-                internetConnectionRequired={this.props.internetConnectionRequired}
+                internetConnectionRequired={
+                    this.props.internetConnectionRequired
+                }
                 name={this.props.name}
                 onBlur={this.handleBlur}
                 onClick={this.handleClick}
@@ -112,12 +126,10 @@ class LibraryItem extends React.PureComponent {
 }
 
 LibraryItem.propTypes = {
+    portRequired: PropTypes.bool,
     bluetoothRequired: PropTypes.bool,
     collaborator: PropTypes.string,
-    description: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node
-    ]),
+    description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     disabled: PropTypes.bool,
     extensionId: PropTypes.string,
     featured: PropTypes.bool,
@@ -127,13 +139,10 @@ LibraryItem.propTypes = {
     id: PropTypes.number.isRequired,
     insetIconURL: PropTypes.string,
     internetConnectionRequired: PropTypes.bool,
-    name: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node
-    ]),
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     onMouseEnter: PropTypes.func.isRequired,
     onMouseLeave: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired,
 };
 
 export default injectIntl(LibraryItem);
