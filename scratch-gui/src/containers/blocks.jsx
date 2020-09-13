@@ -53,6 +53,7 @@ const DroppableBlocks = DropAreaHOC([DragConstants.BACKPACK_CODE])(
 class Blocks extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.ScratchBlocks = VMScratchBlocks(props.vm);
         bindAll(this, [
             "attachVM",
@@ -169,6 +170,7 @@ class Blocks extends React.Component {
         );
     }
     componentDidUpdate(prevProps) {
+        console.log("我就想看看有没有更新好组件!!!");
         // If any modals are open, call hideChaff to close z-indexed field editors
         if (this.props.anyModalVisible && !prevProps.anyModalVisible) {
             this.ScratchBlocks.hideChaff();
@@ -611,6 +613,7 @@ class Blocks extends React.Component {
             toolboxXML,
             // new
             setCode,
+            toolboxCutXML,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -699,6 +702,7 @@ Blocks.propTypes = {
     vm: PropTypes.instanceOf(VM).isRequired,
     // new
     setCode: PropTypes.func,
+    toolboxCutXML: PropTypes.bool,
 };
 
 Blocks.defaultOptions = {
@@ -745,6 +749,8 @@ const mapStateToProps = (state) => ({
     messages: state.locales.messages,
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
     customProceduresVisible: state.scratchGui.customProcedures.active,
+    // new
+    toolboxCutXML: state.scratchGui.toolboxCut.toolboxCutXML,
 });
 
 const mapDispatchToProps = (dispatch) => ({

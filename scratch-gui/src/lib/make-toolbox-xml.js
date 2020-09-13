@@ -766,7 +766,7 @@ const myBlocks = function () {
 // 新增xml
 const uno1 = function () {
     return `
-    <category name="输出" id="uno" colour="#58a0f2" secondaryColour="#3373CC">
+    <category name="输入" id="uno" colour="#58a0f2" secondaryColour="#3373CC">
 
         <block type="uno_key" ></block>
         
@@ -810,7 +810,7 @@ const uno1 = function () {
 
 const uno2 = function () {
     return `
-    <category name="输入" id="uno2" colour="#58a0f2" secondaryColour="#3373CC">
+    <category name="输出" id="uno2" colour="#58a0f2" secondaryColour="#3373CC">
 
         <block type="uno_led" id="uno_led">
         <value name="logic">
