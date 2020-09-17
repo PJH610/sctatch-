@@ -1,65 +1,69 @@
 .toggle-button {
-  display: none;
+    display: none;
 }
 
 .button-label {
-  position: relative;
-  display: inline-block;
-  width: 70px;
-  height: 28px;
-  background-color: #ccc;
-  box-shadow: #ccc 0px 0px 1px 2px;
-  border-radius: 28px;
-  overflow: hidden;
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 28px;
+    background-color: #ccc;
+    box-shadow: #ccc 0px 0px 1px 2px;
+    border-radius: 28px;
+    overflow: hidden;
 }
 
 .circle {
-  position: absolute;
-  top: 1px;
-  left: 2px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #fff;
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #fff;
 }
 
 .button-label .text {
-  line-height: 28px;
-  font-size: 14px;
-  /* text-shadow: 0 0 2px #ddd; */
+    line-height: 28px;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* text-shadow: 0 0 2px #ddd; */
 }
 
 .on {
-  color: #fff;
-  display: none;
-  text-indent: 10px;
+    color: #fff;
+    display: none;
+    text-indent: 10px;
 }
 
 .off {
-  color: #fff;
-  display: inline-block;
-  text-indent: 30px;
+    color: #fff;
+    display: inline-block;
+    text-indent: 30px;
 }
 
 .button-label .circle {
-  left: 0;
-  transition: all 0.3s;
+    left: 0;
+    transition: all 0.3s;
 }
 
-.toggle-button:checked+label.button-label .circle {
-  left: 43px;
-  /* box-shadow: #51ccee 0px 0px 0px 2px; */
+.toggle-button:checked + label.button-label .circle {
+    left: 43px;
+    /* box-shadow: #51ccee 0px 0px 0px 2px; */
 }
 
-.toggle-button:checked+label.button-label .on {
-  display: inline-block;
+.toggle-button:checked + label.button-label .on {
+    display: inline-block;
 }
 
-.toggle-button:checked+label.button-label .off {
-  display: none;
+.toggle-button:checked + label.button-label .off {
+    display: none;
 }
 
-.toggle-button:checked+label.button-label {
-  background-color: #51ccee;
-  box-shadow: 0 0 4px 3px #b3e5f3;
+.toggle-button:checked + label.button-label {
+    background-color: #1890ff;
+    box-shadow: 0 0 4px 3px #6bb5f9;
 }

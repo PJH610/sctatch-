@@ -234,5 +234,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 3px;
     margin-right: 320px;
+    /* display: flex;
+    padding: 0 0.25rem;
+    text-decoration: none;
+    color: $ui-white;
+    user-select: none;
+    align-self: center;
+    position: relative;
+    align-items: center;
+    white-space: nowrap;
+    height: $menu-bar-height; */
 }
