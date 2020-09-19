@@ -391,6 +391,7 @@ class MenuBar extends React.Component {
             });
         }, 1000);
     }
+
     render() {
         // 增加的style
         const linkStyle = {

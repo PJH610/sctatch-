@@ -6,36 +6,28 @@ const SwitchoverComponent = function (props) {
     const { clickOnSetToolboxCut } = props;
 
     return (
-        <div className={classNames(styles.toggleButtonWrapper)}>
+        <>
             {/* <!-- 注意：label的for属性 要与其对应的input的id相对应 --> */}
-            <input
-                type="checkbox"
-                id="toggle-button"
-                className={styles.toggleButton}
-                name="switch"
-                onClick={clickOnSetToolboxCut}
-            />
-            <label
-                htmlFor="toggle-button"
-                className={classNames(styles.buttonLabel)}
-            >
-                <span className={classNames(styles.circle)}></span>
-                <span className={classNames(styles.text, styles.on)}>离线</span>
-                <span className={classNames(styles.text, styles.off)}>
-                    在线
-                </span>
+            {/* <input type="checkbox" id="toggle-button" className={styles.toggleButton} name="switch" onClick={clickonSetToolboxCut} />
+      <label htmlFor="toggle-button" className={classNames(styles.buttonLabel)}>
+        <span className={classNames(styles.circle)} ></span>
+        <span className={classNames(styles.text, styles.on)} >离线</span>
+        <span className={classNames(styles.text, styles.off)} >在线</span>
+      </label> */}
+
+            <label htmlFor="toggle" className={styles.toggle}>
+                <input
+                    type="checkbox"
+                    id="toggle"
+                    onClick={clickOnSetToolboxCut}
+                />
+                <div className={styles.switch}>
+                    <span className={styles.on}>在线</span>
+                    <span className={styles.off}>离线</span>
+                </div>
             </label>
-        </div>
+        </>
     );
 };
-// SwitchoverComponent.propTypes = {
-//   active: PropTypes.bool,
-//   className: PropTypes.string,
-//   onClick: PropTypes.func.isRequired,
-//   title: PropTypes.string
-// };
-// SwitchoverComponent.defaultProps = {
-//   active: false,
-//   title: 'Go'
-// };
+
 export default SwitchoverComponent;
